@@ -1,0 +1,10 @@
+.sv-msg {
+    box-sizing: border-box;
+    margin: 5px 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+.sv-msg.sv-msg-alert {
+    color: #a94442;
+}

@@ -1,13 +1,13 @@
 /*
 * Engine of validator
 * */
-var SimpleValidator = (function($, Validator) {
+SimpleValidator = (function($, Validator) {
     "use strict";
 
     Validator.Engine = {
 
         validate: function($form) {
-            var fields = $form.find('[data-vbs-validate]');
+            var fields = $form.find('[data-validate]');
             var errors = [];
             fields.each(function() {
                 var $field = $(this);
@@ -42,7 +42,7 @@ var SimpleValidator = (function($, Validator) {
         },
 
         getRules: function($field) {
-            var attr = $field.attr('data-vbs-validate');
+            var attr = $field.attr('data-validate');
             var result = {};
             if(attr) {
                 var rules = [];
@@ -85,7 +85,7 @@ var SimpleValidator = (function($, Validator) {
             switch ($elem.prop("type")) {
                 case "radio":
                 case "checkbox":
-                    value = $elem.is(':checked');
+                    value = ($elem.is(':checked')) ? 'checked' : null   ;
                     break;
                 default:
                     value = $elem.val();

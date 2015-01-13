@@ -1,7 +1,7 @@
 /*
 * List of conditions
 * */
-var SimpleValidator = (function($, Validator) {
+SimpleValidator = (function($, Validator) {
     "use strict";
 
     Validator.Conditions = {

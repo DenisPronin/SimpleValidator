@@ -1,13 +1,13 @@
 /*
 * List of messages
 * */
-var SimpleValidator = (function($, Validator) {
+SimpleValidator = (function($, Validator) {
     "use strict";
 
     Validator.MessageApi = {
 
         clearMessages: function($form) {
-            $form.find('.vbs-msg').remove();
+            $form.find('.sv-msg').remove();
         },
 
         showMessages: function(errors) {
@@ -19,7 +19,7 @@ var SimpleValidator = (function($, Validator) {
         },
 
         createMessage: function(message) {
-            return '<div class="vbs-msg vbs-msg-alert">' + message + '</div>';
+            return '<div class="sv-msg sv-msg-alert">' + message + '</div>';
         },
 
         getMessage: function(rule, params) {

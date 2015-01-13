@@ -62,7 +62,10 @@ gulp.task('min_scripts', function() {
 });
 
 gulp.task('css', function() {
-    return reload('v3/css/**/*.css');
+    return gulp.src(css_sources)
+        .pipe(concat('simpleValidator.css'))
+        .pipe(gulp.dest('dist/css'))
+        .pipe(connect.reload());
 });
 
 gulp.task('min_css', function() {
@@ -90,7 +93,7 @@ gulp.task('watch_production', function() {
 });
 
 gulp.task('dev', function(){
-    gulp.start(['scripts', 'watch', 'connect']);
+    gulp.start(['scripts', 'css', 'watch', 'connect']);
 });
 
 gulp.task('default', function(){
