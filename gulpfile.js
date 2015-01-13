@@ -70,9 +70,11 @@ gulp.task('css', function() {
 
 gulp.task('min_css', function() {
     return gulp.src(css_sources)
+        .pipe(concat('simpleValidator.css'))
+        .pipe(gulp.dest('dist/css'))
         .pipe(rename({ suffix: '.min' }))
         .pipe(minifycss())
-        .pipe(gulp.dest('css'))
+        .pipe(gulp.dest('dist/css'))
         .pipe(connect.reload());
 });
 
