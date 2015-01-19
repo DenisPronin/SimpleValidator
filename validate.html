@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>SimpleValidator</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="dist/css/simpleValidator.css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="row col-lg-6">
+
+            <form id="testForm">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" data-validate="required">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" data-validate="required">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <input type="file" id="exampleInputFile" data-validate="required">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" data-validate="required"> Check me out
+                    </label>
+                </div>
+                <button type="button" id="submitBtn" class="btn btn-default">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="dist/js/simpleValidator.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#submitBtn').click(function () {
+                var isValid = SimpleValidator.validate(document.getElementById('testForm'));
+                if (isValid) {
+                    alert('submit');
+                }
+                else {
+                    alert('wrong');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

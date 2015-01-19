@@ -4,6 +4,8 @@
 SimpleValidator = (function($, Validator) {
     "use strict";
 
+    var fieldId = 0;
+
     Validator.Engine = {
 
         validate: function($form) {
@@ -11,6 +13,7 @@ SimpleValidator = (function($, Validator) {
             var errors = [];
             fields.each(function() {
                 var $field = $(this);
+                Validator.Engine.addFieldId($field);
                 var error = Validator.Engine.validateField($field, errors);
                 if(error) {
                     errors.push(error);
@@ -24,6 +27,23 @@ SimpleValidator = (function($, Validator) {
             }
 
             return true;
+        },
+
+        attach: function($form) {
+            var fields = $form.find('[data-validate]');
+            fields.each(function() {
+                var $field = $(this);
+                Validator.Engine.addFieldId($field);
+                $field.on('change', function() {
+                    var error = Validator.Engine.validateField($(this));
+                    if(error) {
+                        Validator.MessageApi.showMessage(error);
+                    }
+                    else {
+                         Validator.MessageApi.clearMessage($(this));
+                    }
+                });
+            });
         },
 
         validateField: function($field) {
@@ -100,8 +120,16 @@ SimpleValidator = (function($, Validator) {
                     value = $elem.val();
             }
             return value;
-        }
+        },
 
+        addFieldId: function($field) {
+            fieldId++;
+            $field.data('sv-field-id', fieldId)
+        },
+
+        getFieldId: function($field) {
+            return $field.data('sv-field-id');
+        }
     };
 
     return Validator;

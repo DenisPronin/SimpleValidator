@@ -6,20 +6,31 @@ SimpleValidator = (function($, Validator) {
 
     Validator.MessageApi = {
 
+        showMessages: function(errors) {
+            errors.forEach(function(error) {
+                Validator.MessageApi.showMessage(error);
+            });
+        },
+
+        showMessage: function(error) {
+            var $field = error.field;
+            var msg = Validator.MessageApi.createMessage(error.message);
+            var fieldId = Validator.Engine.getFieldId($field);
+            msg.addClass('sv-msg_' + fieldId);
+            $field.after(msg);
+        },
+
+        createMessage: function(message) {
+            return $('<div class="sv-msg sv-msg-alert">' + message + '</div>');
+        },
+
         clearMessages: function($form) {
             $form.find('.sv-msg').remove();
         },
 
-        showMessages: function(errors) {
-            errors.forEach(function(error) {
-                var $field = error.field;
-                var msg = Validator.MessageApi.createMessage(error.message);
-                $field.after(msg);
-            });
-        },
-
-        createMessage: function(message) {
-            return '<div class="sv-msg sv-msg-alert">' + message + '</div>';
+        clearMessage: function($field) {
+            var fieldId = Validator.Engine.getFieldId($field);
+            $('.sv-msg_' + fieldId).remove();
         },
 
         getMessage: function(rule, params) {

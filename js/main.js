@@ -13,6 +13,10 @@ var SimpleValidator = (function($) {
     var Validator = {
         validate: function(form){
             return Validator.Engine.validate($(form));
+        },
+
+        attach: function(form) {
+            return Validator.Engine.attach($(form));
         }
 
     };

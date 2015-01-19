@@ -39,17 +39,7 @@
         <script src="dist/js/simpleValidator.js"></script>
         <script>
             $(document).ready(function () {
-                $('#submitBtn').click(function(){
-                    var isValid = SimpleValidator.validate(document.getElementById('testForm'));
-                    if(isValid) {
-                        alert('submit');
-                    }
-                    else {
-                        alert('wrong');
-                    }
-                });
-
-
+                SimpleValidator.attach(document.getElementById('testForm'));
             });
         </script>
     </body>
