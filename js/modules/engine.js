@@ -11,34 +11,43 @@ SimpleValidator = (function($, Validator) {
             var errors = [];
             fields.each(function() {
                 var $field = $(this);
-                var resultRules = Validator.Engine.getRules($field);
-                var rules = resultRules.rules;
-                var isIgnore = false;
-                if(resultRules.ignoreRule) {
-                    isIgnore = Validator.Conditions.ignore($field, resultRules.ignoreRule.params[0]);
-                }
-                if(!isIgnore && rules) {
-                    rules.forEach(function(rule) {
-                        var result = Validator.Conditions[rule.name]($field, rule.params);
-                        if(!result){
-                            var msg = Validator.MessageApi.getMessage(rule.name, rule.params);
-                            errors.push({
-                                field: $field,
-                                rule: rule.name,
-                                message: msg
-                            });
-                        }
-                    });
+                var error = Validator.Engine.validateField($field, errors);
+                if(error) {
+                    errors.push(error);
                 }
             });
 
+            Validator.MessageApi.clearMessages($form);
             if(errors.length > 0) {
-                Validator.MessageApi.clearMessages($form);
                 Validator.MessageApi.showMessages(errors);
                 return false;
             }
 
             return true;
+        },
+
+        validateField: function($field) {
+            var error = null;
+            var resultRules = Validator.Engine.getRules($field);
+            var rules = resultRules.rules;
+            var isIgnore = false;
+            if(resultRules.ignoreRule) {
+                isIgnore = Validator.Conditions.ignore($field, resultRules.ignoreRule.params[0]);
+            }
+            if(!isIgnore && rules) {
+                rules.forEach(function(rule) {
+                    var result = Validator.Conditions[rule.name]($field, rule.params);
+                    if(!result){
+                        var msg = Validator.MessageApi.getMessage(rule.name, rule.params);
+                        error = {
+                            field: $field,
+                            rule: rule.name,
+                            message: msg
+                        };
+                    }
+                });
+            }
+            return error;
         },
 
         getRules: function($field) {
