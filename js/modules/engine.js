@@ -34,15 +34,30 @@ SimpleValidator = (function($, Validator) {
             fields.each(function() {
                 var $field = $(this);
                 Validator.Engine.addFieldId($field);
-                $field.off('change.sv').on('change.sv', function() {
-                    var error = Validator.Engine.validateField($(this));
-                    if(error) {
-                        Validator.MessageApi.showMessage(error);
-                    }
-                    else {
-                         Validator.MessageApi.clearMessage($(this));
-                    }
-                });
+                Validator.Engine.onChangeField($field);
+            });
+            Validator.Engine.onSubmitForm($form);
+        },
+
+        onChangeField: function($field) {
+            $field.off('change.sv').on('change.sv', function() {
+                var error = Validator.Engine.validateField($(this));
+                if(error) {
+                    Validator.MessageApi.showMessage(error);
+                }
+                else {
+                    Validator.MessageApi.clearMessage($(this));
+                }
+            });
+        },
+
+        onSubmitForm: function($form) {
+            $form.off('submit.sv').on('submit.sv', function(e){
+                e.preventDefault();
+                var isValid = Validator.validate($form);
+                if(isValid) {
+                    $form.submit();
+                }
             });
         },
 
