@@ -34,7 +34,7 @@ SimpleValidator = (function($, Validator) {
             fields.each(function() {
                 var $field = $(this);
                 Validator.Engine.addFieldId($field);
-                $field.on('change', function() {
+                $field.off('change.sv').on('change.sv', function() {
                     var error = Validator.Engine.validateField($(this));
                     if(error) {
                         Validator.MessageApi.showMessage(error);
