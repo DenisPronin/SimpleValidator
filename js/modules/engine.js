@@ -124,7 +124,7 @@ SimpleValidator = (function($, Validator) {
 
         addFieldId: function($field) {
             fieldId++;
-            $field.data('sv-field-id', fieldId)
+            $field.data('sv-field-id', fieldId);
         },
 
         getFieldId: function($field) {
