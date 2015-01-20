@@ -40,7 +40,8 @@ SimpleValidator = (function($, Validator) {
         },
 
         onChangeField: function($field) {
-            $field.off('change.sv').on('change.sv', function() {
+            var eventName = Validator.Engine.getChangeEvent($field);
+            $field.off(eventName).on(eventName, function() {
                 var error = Validator.Engine.validateField($(this));
                 if(error) {
                     Validator.MessageApi.showMessage(error);
@@ -144,6 +145,15 @@ SimpleValidator = (function($, Validator) {
 
         getFieldId: function($field) {
             return $field.data('sv-field-id');
+        },
+
+        getChangeEvent: function($field){
+            var el = document.createElement('div');
+            var inputEvent = (!('oninput' in el)) ? 'keyup' : 'input';
+            var type  = $field.attr('type');
+            var event = ('radio' === type || 'checkbox' === type || 'file' === type || 'SELECT' === $field.get(0).tagName) ? 'change' : inputEvent;
+            event += '.sv';
+            return event;
         }
     };
 
