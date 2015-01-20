@@ -50,7 +50,8 @@ SimpleValidator = (function($, Validator) {
     Validator.Messages = {
         required: 'This field is required',
         minSize: '{{ param1 }} characters required',
-        maxSize: '{{ param1 }} characters allowed'
+        maxSize: '{{ param1 }} characters allowed',
+        email: 'Invalid email address'
     };
 
     return Validator;

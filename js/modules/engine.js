@@ -42,12 +42,11 @@ SimpleValidator = (function($, Validator) {
         onChangeField: function($field) {
             var eventName = Validator.Engine.getChangeEvent($field);
             $field.off(eventName).on(eventName, function() {
-                var error = Validator.Engine.validateField($(this));
+                var _field = $(this);
+                var error = Validator.Engine.validateField(_field);
+                Validator.MessageApi.clearMessage(_field);
                 if(error) {
                     Validator.MessageApi.showMessage(error);
-                }
-                else {
-                    Validator.MessageApi.clearMessage($(this));
                 }
             });
         },

@@ -24,6 +24,12 @@ SimpleValidator = (function($, Validator) {
             return (length <= size);
         },
 
+        email: function($elem, params){
+            var value = Validator.Engine.getValue($elem);
+            var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return regex.test(value);
+        },
+
         visible: function($elem) {
             return $elem.is(':visible');
         },
