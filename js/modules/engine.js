@@ -14,9 +14,9 @@ SimpleValidator = (function($, Validator) {
             fields.each(function() {
                 var $field = $(this);
                 Validator.Engine.addFieldId($field);
-                var error = Validator.Engine.validateField($field, errors);
-                if(error) {
-                    errors.push(error);
+                var _errors = Validator.Engine.validateField($field);
+                if(_errors.length > 0) {
+                    errors = errors.concat(_errors);
                 }
             });
 
@@ -43,10 +43,10 @@ SimpleValidator = (function($, Validator) {
             var eventName = Validator.Engine.getChangeEvent($field);
             $field.off(eventName).on(eventName, function() {
                 var _field = $(this);
-                var error = Validator.Engine.validateField(_field);
+                var _errors = Validator.Engine.validateField(_field);
                 Validator.MessageApi.clearMessage(_field);
-                if(error) {
-                    Validator.MessageApi.showMessage(error);
+                if(_errors.length > 0) {
+                    Validator.MessageApi.showMessages(_errors);
                 }
             });
         },
@@ -62,7 +62,7 @@ SimpleValidator = (function($, Validator) {
         },
 
         validateField: function($field) {
-            var error = null;
+            var errors = [];
             var resultRules = Validator.Engine.getRules($field);
             var rules = resultRules.rules;
             var isIgnore = false;
@@ -74,15 +74,15 @@ SimpleValidator = (function($, Validator) {
                     var result = Validator.Conditions[rule.name]($field, rule.params);
                     if(!result){
                         var msg = Validator.MessageApi.getMessage(rule.name, rule.params);
-                        error = {
+                        errors.push({
                             field: $field,
                             rule: rule.name,
                             message: msg
-                        };
+                        });
                     }
                 });
             }
-            return error;
+            return errors;
         },
 
         getRules: function($field) {
